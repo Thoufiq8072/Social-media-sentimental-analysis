@@ -7,14 +7,14 @@ Please adhere to the guidelines below to maintain consistency.
 
 ---
 
-## 📁 Project Structure Rules
+## Project Structure Rules
 - Do not modify folder names without discussion
 - Each layer (Bronze, Silver, Gold, ML) must remain isolated
 - Shared utilities must be documented
 
 ---
 
-## 📓 Notebook Standards
+## Notebook Standards
 - Use clear, descriptive notebook names
 - Each notebook should include:
   - Purpose
@@ -24,20 +24,20 @@ Please adhere to the guidelines below to maintain consistency.
 
 ---
 
-## 🧪 Data Handling
+## Data Handling
 - Do not commit large datasets
 - Use sample data for demonstrations
 - External storage links should be read-only
 
 ---
 
-## 📝 Documentation
+## Documentation
 - Any new pipeline must be documented
 - Update relevant README files when changes are made
 
 ---
 
-## 🔄 Version Control
+## Version Control
 - Use meaningful commit messages
 - Avoid committing temporary or generated files
 

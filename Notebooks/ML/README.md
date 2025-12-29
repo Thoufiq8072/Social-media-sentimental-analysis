@@ -1,4 +1,4 @@
-# ML Pipeline – Sentiment \& Emotion Analysis
+# ML Pipeline – Sentiment & Emotion Analysis
 
 This module handles sentiment and emotion classification on Silver-layer
 
@@ -8,7 +8,7 @@ GPU acceleration is used to optimize performance.
 
 ---
 
-## 📥 Input Assumptions
+## Input Assumptions
 
 
 This ML pipeline assumes:
@@ -21,7 +21,7 @@ This ML pipeline assumes:
 
 ---
 
-## 📊 ML Dataset Preparation Strategies
+## ML Dataset Preparation Strategies
 
 Two dataset preparation strategies are implemented to support different scales and experimentation needs.
 
@@ -83,7 +83,7 @@ Silver Table → 100 Parquet Partitions → Google Drive → Colab (Batch ML)
 
 ---
 
-## ✅ Final Approach Used
+## Final Approach Used
 
 The **partitioned Parquet strategy** is used for all final ML runs that feed the Gold layer.
 
@@ -98,7 +98,7 @@ The single-file approach is retained for:
 
 ---
 
-## 📤 Output Handling
+## Output Handling
 
 - ML outputs are written back to Google Drive
 
@@ -110,7 +110,7 @@ The single-file approach is retained for:
 
 ---
 
-## 🧠 Design Rationale
+## Design Rationale
 
 This approach:
 
@@ -124,7 +124,7 @@ This approach:
 
 ---
 
-## ⚠️ Important Notes
+## Important Notes
 
 - ML notebooks do not create schemas or volumes
 

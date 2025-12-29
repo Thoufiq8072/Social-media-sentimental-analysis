@@ -3,17 +3,17 @@
 
 ## 📌 Table of Contents
 - [Overview](#overview)
-- [Architecture](#architecture-overview)
+- [Architecture](#architecture)
 - [Tech Stack](#tech-stack)
 - [Repository Structure](#repository-structure)
-- [Prerequisites](#prerequisites-mandatory)
+- [Prerequisites](#prerequisites)
 - [Execution Flow](#execution-flow)
-- [Dashboards](#dashboards)
 - [Future Enhancements](#future-enhancements)
+- [Conclusion](#conclusion)
 
 ---
 
-## 🔍 Overview
+## Overview
 
 This project implements an **end-to-end sentiment analytics platform** for social media data using **Apache Spark, NLP, and ML models**, following an **industry-grade medallion architecture**.
 
@@ -21,7 +21,7 @@ The pipeline ingests raw data, performs scalable transformations, applies **sent
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ![Architecture Diagram](Architecture/architecture_diagram.png)
 
@@ -36,9 +36,9 @@ Raw → Bronze → Silver → ML → Gold → Dashboard
 
 ---
 
-## 🧱 Medallion Architecture
+## Medallion Architecture
 
-### 🥉 Bronze Layer – Raw Ingestion
+### Bronze Layer – Raw Ingestion
 - Stores raw social media data
 - Enforced schema, no transformations
 - Mirrors source structure
@@ -47,7 +47,7 @@ Raw → Bronze → Silver → ML → Gold → Dashboard
 
 ---
 
-### 🥈 Silver Layer – Cleaned & Enriched
+### Silver Layer – Cleaned & Enriched
 - Deduplication
 - Language filtering (English)
 - Timestamp normalization
@@ -60,7 +60,7 @@ Raw → Bronze → Silver → ML → Gold → Dashboard
 
 ---
 
-### 🤖 ML Processing Layer
+### ML Processing Layer
 
 ML inference is **decoupled from Spark ETL**, following industry best practices.
 
@@ -79,7 +79,7 @@ ML inference is **decoupled from Spark ETL**, following industry best practices.
 
 ---
 
-### 🥇 Gold Layer – Analytics
+### Gold Layer – Analytics
 
 Business-ready aggregated tables:
 - Monthy Tweet Counts
@@ -94,7 +94,7 @@ Optimized for dashboard performance.
 
 ---
 
-## 📊 Dashboard (Databricks SQL)
+## Dashboard (Databricks SQL)
 
 **Key Insights:**
 - Daily sentiment trend (positive vs negative)
@@ -109,7 +109,7 @@ Optimized for dashboard performance.
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 |     Category    |       Technology         |
 |-----------------|--------------------------|
@@ -123,7 +123,7 @@ Optimized for dashboard performance.
 
 ---
 
-## 🚀 Performance Highlights
+## Performance Highlights
 
 - GPU inference reduced batch runtime from **minutes to seconds**
 - Batched ML inference maximized GPU utilization
@@ -131,7 +131,7 @@ Optimized for dashboard performance.
 
 ---
 
-## 🧠 Key Design Decisions
+## Key Design Decisions
 
 - Medallion architecture for data quality
 - Batch ML inference instead of row-level Spark UDFs
@@ -140,7 +140,7 @@ Optimized for dashboard performance.
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 .
@@ -203,7 +203,7 @@ schemas, and volumes are created.
 
 ---
 
-## ▶️ Execution Flow
+## Execution Flow
 
 Follow the steps below to run the project end-to-end.
 
@@ -261,7 +261,7 @@ Refer to:
 - Visualize sentiment trends and insights
 
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 The following enhancements are planned to further improve scalability, automation, and production readiness of the platform:
 
@@ -324,7 +324,7 @@ The following enhancements are planned to further improve scalability, automatio
 - Enforce code quality gates before merges
 
 
-## 🏁 Conclusion
+## Conclusion
 
 This project demonstrates:
 - Strong **data engineering fundamentals**
