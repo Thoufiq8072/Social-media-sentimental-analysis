@@ -13,7 +13,7 @@ The pipeline ingests raw data, performs scalable transformations, applies **sent
 
 ## 🏗️ Architecture
 
-![Architecture Diagram](Architecture\architecture_diagram.png)
+![Architecture Diagram](Architecture/architecture_diagram.png)
 
 **High-level flow:**
 
