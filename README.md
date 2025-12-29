@@ -13,7 +13,7 @@ The pipeline ingests raw data, performs scalable transformations, applies **sent
 
 ## 🏗️ Architecture
 
-![Architecture Diagram](architecture/architecture_diagram.png)
+![Architecture Diagram](Architecture\architecture_diagram.png)
 
 **High-level flow:**
 
@@ -135,8 +135,6 @@ Optimized for dashboard performance.
 ```
 .
 ├── Notebooks/
-│       └── Prerequisites
-│    	       └─ databricks_prerequisites
 │       └── Bronze
 │    	       └─ bronze_notebook
 │       └── Silver
@@ -144,6 +142,7 @@ Optimized for dashboard performance.
 │       └── Machine Learning
 │   	       └─ ml_flow_notebook
 │   	       └─ mlflow_dataset_preparation_notebook
+│   	       └─ README.md
 │       └── Gold
 │   	       └─ gold_notebook
 │   	       └─ gold_views_notebook
