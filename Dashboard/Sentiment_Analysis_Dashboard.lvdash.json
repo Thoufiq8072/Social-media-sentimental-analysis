@@ -1,0 +1,664 @@
+{
+  "datasets": [
+    {
+      "name": "61a6b1be",
+      "displayName": "daily_sentiment_trend",
+      "queryLines": [
+        "SELECT * FROM sentimental_analysis.gold.daily_sentiment_trend"
+      ]
+    },
+    {
+      "name": "bb83f702",
+      "displayName": "daily_emotion_trend",
+      "queryLines": [
+        "SELECT * FROM sentimental_analysis.gold.daily_emotion_trend"
+      ]
+    },
+    {
+      "name": "517b40b6",
+      "displayName": "overall_sentiment_share",
+      "queryLines": [
+        "SELECT * FROM sentimental_analysis.gold.overall_sentiment_share"
+      ]
+    },
+    {
+      "name": "556994b9",
+      "displayName": "overall_emotion_share",
+      "queryLines": [
+        "SELECT * FROM sentimental_analysis.gold.overall_emotion_share"
+      ]
+    },
+    {
+      "name": "383d0dc3",
+      "displayName": "daily_net_sentiment",
+      "queryLines": [
+        "SELECT * FROM sentimental_analysis.gold.daily_net_sentiment"
+      ]
+    },
+    {
+      "name": "b7f2cf96",
+      "displayName": "social_media_gold",
+      "queryLines": [
+        "SELECT row_id, created_date FROM sentimental_analysis.gold.social_media_gold"
+      ]
+    },
+    {
+      "name": "cfe025b5",
+      "displayName": "trending_hashtags",
+      "queryLines": [
+        "with base as (select row_id, explode(hashtags_array) as hashtag from sentimental_analysis.gold.social_media_gold),\r\n",
+        "final_data as (\r\n",
+        "    select row_id, hashtag from base\r\n",
+        "    group by row_id, hashtag\r\n",
+        ")\r\n",
+        "select hashtag, count(row_id) from final_data\r\n",
+        "group by hashtag"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "0d014277",
+      "displayName": "sentiment_share",
+      "layout": [
+        {
+          "widget": {
+            "name": "ef7e289b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "517b40b6",
+                  "fields": [
+                    {
+                      "name": "percentage",
+                      "expression": "`percentage`"
+                    },
+                    {
+                      "name": "sentiment_label",
+                      "expression": "`sentiment_label`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "percentage",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Sentiment Percentage"
+                },
+                "color": {
+                  "fieldName": "sentiment_label",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "showDescription": true,
+                "title": "Overall Sentiment Distribution",
+                "description": "Overall sentiment polarity across all posts"
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 0,
+            "width": 4,
+            "height": 10
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "405154fd",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "74fc7079",
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {},
+              "frame": {
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS"
+    },
+    {
+      "name": "27dd3332",
+      "displayName": "net_sentiment",
+      "layout": [
+        {
+          "widget": {
+            "name": "9fc74dcc",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "383d0dc3",
+                  "fields": [
+                    {
+                      "name": "daily(created_date)",
+                      "expression": "DATE_TRUNC(\"DAY\", `created_date`)"
+                    },
+                    {
+                      "name": "sum(net_sentiment_score)",
+                      "expression": "SUM(`net_sentiment_score`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "daily(created_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(net_sentiment_score)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": false
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Daily Net Sentiment"
+              },
+              "annotations": [
+                {
+                  "type": "horizontal-line",
+                  "encodings": {
+                    "y": {
+                      "dataValue": "0",
+                      "dataType": "INTEGER"
+                    },
+                    "color": {
+                      "value": {
+                        "themeColorType": "visualizationColors",
+                        "position": 2
+                      }
+                    }
+                  }
+                }
+              ],
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 13
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "9425f8fc",
+      "displayName": "sentimental_trends",
+      "layout": [
+        {
+          "widget": {
+            "name": "35bdf8c1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "61a6b1be",
+                  "fields": [
+                    {
+                      "name": "sentiment_label",
+                      "expression": "`sentiment_label`"
+                    },
+                    {
+                      "name": "daily(created_date)",
+                      "expression": "DATE_TRUNC(\"DAY\", `created_date`)"
+                    },
+                    {
+                      "name": "sum(tweet_count)",
+                      "expression": "SUM(`tweet_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "daily(created_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(tweet_count)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "sentiment_label",
+                  "scale": {
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "positive",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 3
+                        }
+                      },
+                      {
+                        "value": "negative",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 4
+                        }
+                      }
+                    ]
+                  }
+                },
+                "label": {
+                  "show": false
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "showDescription": true,
+                "title": "Daily Sentiment Trend (Positive vs Negative)",
+                "description": "Daily count of positive and negative social media posts over time\n"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 11
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "fb0abbd7",
+      "displayName": "emotion_trends",
+      "layout": [
+        {
+          "widget": {
+            "name": "57b40146",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "bb83f702",
+                  "fields": [
+                    {
+                      "name": "emotion_label",
+                      "expression": "`emotion_label`"
+                    },
+                    {
+                      "name": "weekly(created_date)",
+                      "expression": "DATE_TRUNC(\"WEEK\", `created_date`)"
+                    },
+                    {
+                      "name": "sum(tweet_count)",
+                      "expression": "SUM(`tweet_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "weekly(created_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(tweet_count)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "emotion_label",
+                  "displayName": "Emotion_Label",
+                  "scale": {
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "fear",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 4
+                        }
+                      },
+                      {
+                        "value": "joy",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 3
+                        }
+                      }
+                    ],
+                    "sort": {
+                      "by": "custom-order",
+                      "orderedValues": [
+                        "disgust",
+                        "sadness",
+                        "surprise",
+                        "anger",
+                        "joy",
+                        "fear",
+                        "neutral"
+                      ]
+                    }
+                  }
+                }
+              },
+              "frame": {
+                "showDescription": true,
+                "description": "Weekly count of Emotions in social media posts over time",
+                "title": "Weekly Emotion Trend",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 11
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "52f131cc",
+      "displayName": "emotion_share",
+      "layout": [
+        {
+          "widget": {
+            "name": "b250092d",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "556994b9",
+                  "fields": [
+                    {
+                      "name": "percentage",
+                      "expression": "`percentage`"
+                    },
+                    {
+                      "name": "emotion_label",
+                      "expression": "`emotion_label`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "percentage",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Emotions Percentage"
+                },
+                "color": {
+                  "fieldName": "emotion_label",
+                  "legend": {
+                    "title": "Emotion_Label"
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": false
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Overall Emotion Distribution"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 5,
+            "height": 13
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "e78a136f",
+      "displayName": "Count_by_month",
+      "layout": [
+        {
+          "widget": {
+            "name": "b2089b55",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b7f2cf96",
+                  "fields": [
+                    {
+                      "name": "monthly(created_date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `created_date`)"
+                    },
+                    {
+                      "name": "count(row_id)",
+                      "expression": "COUNT(`row_id`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "histogram",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(created_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(row_id)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Count of Records By Month"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 11
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "43ec5c78",
+      "displayName": "Hashtag_trends",
+      "layout": [
+        {
+          "widget": {
+            "name": "25536056",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "cfe025b5",
+                  "fields": [
+                    {
+                      "name": "hashtag",
+                      "expression": "`hashtag`"
+                    },
+                    {
+                      "name": "sum(count(row_id))",
+                      "expression": "SUM(`count(row_id)`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "hashtag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(count(row_id))",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "hashtag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Trending Hashtags"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 13
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
